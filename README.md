@@ -2,13 +2,13 @@ MERN-stack-CMS is a free and open-source content management system *(CMS)* based
 
 
 
-MERN-stack-CMS can be modified and used to create your awesome single-page application. Consider supporting MERN-stack-CMS if you want to see some improvement. Here are the ways to show support:
+MERN-stack-CMS can be modified and now be used to create your awesome and fast single-page application. Consider supporting MERN-stack-CMS with a notice about your suggestion if you want to see some improvement. Here are the ways to show some support:
 
 
 
 | **Spreed the word** | Share about MERN-stack-CMS to your friends, or give it a little tweet. |
 | **Post an article** | Publish a blog or a forum thread about MERN-stack-CMS. |
-| [**via Patreon**](https://www.patreon.com/5ervant) | Become a backer/sponsor on Patreon. |
+| [**via Patreon**](https://www.patreon.com/5ervant) | Become a patron/backer/sponsor on Patreon. |
 | [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7CKXRHMTRVSZC) | Make a donation with PayPal. |
 
 
