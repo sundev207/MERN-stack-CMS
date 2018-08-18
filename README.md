@@ -6,7 +6,8 @@ MERN-stack-CMS can be modified and used to create your awesome single-page appli
 
 
 
-| **Spreed the word** | Share MERN-stack-CMS to your friends, or give it a little tweet. |
+| **Spreed the word** | Share about MERN-stack-CMS to your friends, or give it a little tweet. |
+| **Post an article** | Publish a blog or a forum thread about MERN-stack-CMS. |
 | [**via Patreon**](https://www.patreon.com/5ervant) | Become a backer/sponsor on Patreon. |
 | [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7CKXRHMTRVSZC) | Make a donation with PayPal. |
 
