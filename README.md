@@ -2,7 +2,7 @@ MERN-stack-CMS is a free and open-source content management system *(CMS)* based
 
 
 
-MERN-stack-CMS can be modified and now be used to create your awesome and fast single-page application. Consider supporting MERN-stack-CMS with a notice about your suggestion if you want to see some improvement. Here are the ways to show some support:
+MERN-stack-CMS can be modified and now be used to create your awesome and fast single-page application. Consider supporting MERN-stack-CMS with a notice about your suggestion and the feature that you want to implement if you want to see some improvement. Here are the ways to show some support:
 
 
 
