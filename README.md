@@ -6,6 +6,7 @@ MERN-stack-CMS can be modified and now be used to create your awesome and fast s
 
 
 
+| [**Give a Star**](https://github.com/5TechCenter/MERN-stack-CMS) | Give 5TechCenter/MERN-stack-CMS a star on GitHub. |
 | **Spreed the word** | Share about MERN-stack-CMS to your friends, or give it a little tweet. |
 | **Post an article** | Publish a blog or a forum thread about MERN-stack-CMS. |
 | [**via Patreon**](https://www.patreon.com/5ervant) | Become a patron/backer/sponsor on Patreon. |
