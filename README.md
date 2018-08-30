@@ -2,15 +2,15 @@ MERN-stack-CMS is a free and open-source content management system *(CMS)* based
 
 
 
-MERN-stack-CMS can be modified and now be used to create your awesome and fast single-page application. Consider supporting MERN-stack-CMS with a notice about your suggestion and the feature that you want to implement if you want to see some improvement. Here are the ways to show some support:
+MERN-stack-CMS can be modified and now be used to create your awesome and fast single-page blogging application. Consider supporting MERN-stack-CMS with a notice about your suggestion and the feature that you want to implement. Here are the ways to show some support:
 
 
 
+
+| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7CKXRHMTRVSZC) | Make a donation with PayPal. |
 | [**Give a Star**](https://github.com/5TechCenter/MERN-stack-CMS) | Give 5TechCenter/MERN-stack-CMS a star on GitHub. |
 | **Spreed the word** | Share about MERN-stack-CMS to your friends, or give it a little tweet. |
-| **Post an article** | Publish a blog or a forum thread about MERN-stack-CMS. |
-| [**via Patreon**](https://www.patreon.com/5ervant) | Become a patron/backer/sponsor on Patreon. |
-| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7CKXRHMTRVSZC) | Make a donation with PayPal. |
+| **Post an article** | Be head about MERN-stack-CMS by publishing a blog or forum thread about it. |
 
 
 
