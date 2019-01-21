@@ -2,15 +2,15 @@ MERN-stack-CMS is a free and open-source content management system *(CMS)* based
 
 
 
-MERN-stack-CMS can be modified and now be used to create your awesome and fast single-page blogging application. Consider supporting MERN-stack-CMS with a notice about your suggestion and the feature that you want to implement. Here are the ways to show some support:
 
 
 
 
-| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7CKXRHMTRVSZC) | Make a donation with PayPal. |
-| [**Give a Star**](https://github.com/5TechCenter/MERN-stack-CMS) | Give 5TechCenter/MERN-stack-CMS a star on GitHub. |
-| **Spreed the word** | Share about MERN-stack-CMS to your friends, or give it a little tweet. |
-| **Post an article** | Be head about MERN-stack-CMS by publishing a blog or forum thread about it. |
+
+
+
+
+
 
 
 
@@ -23,7 +23,7 @@ To use MERN-stack-CMS, you must first checkout this repository, or download the 
 
 The "server" directory contains the source code for your app's backend Express server.
 
- - First, you must have a `mongod` running version 3.2.x of MongoDB or above.
+ - First, you must have a `mongod` running version 3.2.x of MongoDB or above. ([Recommended fully-managed database service](https://mbsy.co/pGh7l) to deploy a MongoDB database in the cloud.)
  - In the "server" directory, run `npm install` to install its dependencies.
  - Open */server/config.js*, read the property descriptions carefully and set them properly according to the configuration of your server.
  - */sites.json* contains your multisite information, modify and import it as your database collection named 'sites' by running: `mongoimport --drop -d reactcms -c sites sites.json` or `mongoimport -h <hostname><:port> -d reactcms -c sites -u <username> -p <password> --file sites.json`
@@ -70,4 +70,4 @@ db.users.updateOne({ username: 'CREATED_USER_NAME' },{ $set: { role: 'admin' } }
 ~~~~
  - If the modified account is currently signed in, sign out and re-sign in it.
 
-Those are the things that you need, you may now post a new content using your administrator account.
+Those are the things that you need, you may now post a blog using your administrator account.
