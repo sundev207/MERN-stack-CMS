@@ -26,12 +26,29 @@ const siteSchema = new Schema({
   template: { type: String, default: 'light' },
   themes: {
     type: Array,
-    'default': [
+    default: [
       { template: 'light', name: 'Light', author: 'MERN-stack-CMS' },
       { template: 'dark', name: 'Dark', author: 'MERN-stack-CMS' },
     ],
   },
-  content: widgetAreaField,
+  menus: {
+    type: [{
+      _id: { type: Schema.ObjectId, required: true },
+      name: { type: String, required: true },
+      items: [{
+        _id: { type: Schema.ObjectId, required: true },
+        parent: Schema.ObjectId,
+        order: { type: Number, required: true },
+        label: String,
+        type: { type: String, required: true },
+        guid: { type: String, required: true },
+      }],
+    }],
+    default: [],
+  },
+  header: widgetAreaField,
+  top_content: widgetAreaField,
+  bottom_content: widgetAreaField,
   left_sidebar: widgetAreaField,
   right_sidebar: widgetAreaField,
   footer: widgetAreaField,
