@@ -4,7 +4,7 @@ import {
   TableCell, TableHead, TableRow, TableSortLabel, Checkbox, Tooltip
 } from '@material-ui/core';
 
-class EnhancedTableHead extends Component {
+class PostsTableHead extends Component {
   createSortHandler = property => event => {
     this.props.onRequestSort(event, property);
   };
@@ -22,25 +22,25 @@ class EnhancedTableHead extends Component {
               onChange={onSelectAllClick}
             />
           </TableCell>
-          {columnData.map(column => {
+          {columnData.map(row => {
             return (
               <TableCell
-                key={column.id}
-                numeric={column.numeric}
-                padding={column.disablePadding ? 'none' : 'default'}
-                sortDirection={orderBy === column.id ? order : false}
+                key={row.id}
+                align={row.numeric ? 'right' : 'left'}
+                padding={row.disablePadding ? 'none' : 'default'}
+                sortDirection={orderBy === row.id ? order : false}
               >
                 <Tooltip
                   title="Sort"
-                  placement={column.numeric ? 'bottom-end' : 'bottom-start'}
+                  placement={row.numeric ? 'bottom-end' : 'bottom-start'}
                   enterDelay={300}
                 >
                   <TableSortLabel
-                    active={orderBy === column.id}
+                    active={orderBy === row.id}
                     direction={order}
-                    onClick={this.createSortHandler(column.id)}
+                    onClick={this.createSortHandler(row.id)}
                   >
-                    {column.label}
+                    {row.label}
                   </TableSortLabel>
                 </Tooltip>
               </TableCell>
@@ -52,7 +52,7 @@ class EnhancedTableHead extends Component {
   }
 }
 
-EnhancedTableHead.propTypes = {
+PostsTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
@@ -62,4 +62,4 @@ EnhancedTableHead.propTypes = {
   columnData: PropTypes.array.isRequired,
 };
 
-export default EnhancedTableHead;
+export default PostsTableHead;

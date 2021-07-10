@@ -52,7 +52,7 @@ class InstantTag extends Component {
           <Button
             type="submit"
             disabled={pristine || submitting || invalid}
-            variant="raised"
+            variant="contained"
             size="medium"
             className={classes.groupButton}
             fullWidth
@@ -68,6 +68,14 @@ class InstantTag extends Component {
 InstantTag.propTypes = {
   classes: PropTypes.object.isRequired,
   type: PropTypes.string.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  invalid: PropTypes.bool.isRequired,
+  reset: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  openSnackbar: PropTypes.func.isRequired,
+  addStateValues: PropTypes.func.isRequired,
 };
 
 function mapStateToProps({ auth: { user } }) {

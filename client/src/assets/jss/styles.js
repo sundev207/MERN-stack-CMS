@@ -57,6 +57,7 @@ export const textFieldButtonStyle = theme => ({
   groupButton: {
     [theme.breakpoints.up('lg')]: {
       width: '40%',
+      marginTop: theme.spacing.unit,
     },
   },
 });
@@ -64,5 +65,14 @@ export const textFieldButtonStyle = theme => ({
 export const textFieldStyle = theme => ({
   textField: {
     padding: theme.spacing.unit,
+  },
+});
+
+export const sidebarStyle = theme => ({
+  paper: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    overflowX: 'hidden',
   },
 });

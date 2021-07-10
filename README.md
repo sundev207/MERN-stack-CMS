@@ -1,4 +1,6 @@
-MERN-stack-CMS is a free and open-source content management system *(CMS)* based on ReactJS, Node.js, Express and MongoDB.
+MERN-stack-CMS is a free and open-source content management system *(CMS)* based on React, Node.js, Express and MongoDB.
+
+
 
 
 
@@ -19,14 +21,14 @@ To use MERN-stack-CMS, you must first checkout this repository, or download the 
 
 ### Installing back-end with Node.js, Express and MongoDB
 
-The "server" directory contains the source code for your app's backend Express server.<br />
-*(You can build your own custom backend server using other programming language if you want.)*
+The "server" directory contains the source code for your app's backend Express server.
 
- - First, you must have a `mongod` running version 3.2.x of MongoDB or above.
+ - First, you must have a `mongod` running version 3.2.x of MongoDB or above. *([Recommended provider to have your own domain and VPS/dedicated server that can be customized to have Node.js and MongoDB for hosting a MEAN/MERN stack application like React CMS.](#))*
  - In the "server" directory, run `npm install` to install its dependencies.
  - Open */server/config.js*, read the property descriptions carefully and set them properly according to the configuration of your server.
- - */sites.json* contains your multisite information, modify and import it as your database collection named 'sites' by running: `mongoimport --drop -d reactcms -c sites sites.json`
- - In the "server" directory, run `npm start` or `nodemon` to run the Express app which starts your server.
+ - */sites.json* contains your multisite information, modify and import it as your database collection named 'sites' by running: `mongoimport --drop -d reactcms -c sites sites.json` or `mongoimport -h <hostname><:port> -d reactcms -c sites -u <username> -p <password> --file sites.json`
+ - In the "server" directory, run `npm start` or `nodemon` to run the Express app which starts your server that can be locally access at: http://localhost:3001
+ - **Make sure to test your RESTful API server locally to easily diagnose if there's any problem!**
 
 ### Installing front-end React application
 
@@ -38,8 +40,9 @@ The "client" directory contains the source code for your React app.
 
 ### How to register the first administrator?
 
-You need to manually modify the created user's data in the database 'users' collection. Here's a few guide about it:
+You need to manually modify the created user's data in the database 'users' collection. Here are a few guidelines about it:
 
+ - Register the account that you'll going to convert as administrator.
  - A user data document contains these properties:
 ~~~~
 {
@@ -56,7 +59,8 @@ You need to manually modify the created user's data in the database 'users' coll
   email: CREATED_USER_EMAIL
   username: CREATED_USER_NAME,
   hash: CREATED_USER_HASH,
-  role: 'admin';
+  role: 'admin',
+  ...
 }
 ~~~~
  - Here are terminal commands that you may need to run if you're hosting your `mongod` on your local server:
@@ -65,5 +69,6 @@ mongo
 use reactcms
 db.users.updateOne({ username: 'CREATED_USER_NAME' },{ $set: { role: 'admin' } })
 ~~~~
+ - If the modified account is currently signed in, sign out and re-sign in it.
 
-That all the things that you need to accomplish, you may now post a new content using your admin account.
+Those are the things that you need, you may now post a blog using your administrator account.

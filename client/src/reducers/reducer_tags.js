@@ -1,7 +1,11 @@
 import _ from 'lodash';
 
 import {
-  FETCH_TAGS, DELETE_TAG, DELETE_TAGS, ADD_TAG
+  FETCH_TAGS,
+  DELETE_TAG,
+  DELETE_TAGS,
+  ADD_TAG,
+  FETCH_TAG
 } from '../actions/types';
 
 export default (state = {}, action) => {
@@ -10,6 +14,9 @@ export default (state = {}, action) => {
   let mapped;
 
   switch (action.type) {
+    case FETCH_TAG:
+      return data ? { ...state, [data._id]: data } : state;
+
     case FETCH_TAGS:
       mapped = _.mapKeys(data, '_id');
       return { ...state, ...mapped };
@@ -18,7 +25,9 @@ export default (state = {}, action) => {
       return _.omit(state, data._id);
 
     case DELETE_TAGS:
-      const { params: { ids } } = payload.config;
+      const {
+        params: { ids }
+      } = payload.config;
       return _.omit(state, ids);
 
     case ADD_TAG:
@@ -27,4 +36,4 @@ export default (state = {}, action) => {
     default:
       return state;
   }
-}
+};

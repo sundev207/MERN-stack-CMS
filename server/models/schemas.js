@@ -1,9 +1,20 @@
 const { Schema } = require('mongoose');
 
+const widgetAreaField = {
+  type: [{
+    _id: { type: Schema.ObjectId, required: true },
+    type: { type: String, required: true },
+    order: { type: Number, required: true },
+    title: Schema.Types.Mixed,
+    body: Schema.Types.Mixed,
+  }],
+  default: [],
+};
+
 const siteSchema = new Schema({
   _id: {
-    domain: { type: String, required: true },
-    collectionPrefix: { type: String, required: true },
+    domain: { type: String },
+    collectionPrefix: { type: String },
   },
   title: String,
   description: String,
@@ -12,6 +23,36 @@ const siteSchema = new Schema({
     page_on_front: Schema.ObjectId,
     page_for_posts: Schema.ObjectId,
   },
+  template: { type: String, default: 'light' },
+  themes: {
+    type: Array,
+    default: [
+      { template: 'light', name: 'Light', author: 'MERN-stack-CMS' },
+      { template: 'dark', name: 'Dark', author: 'MERN-stack-CMS' },
+    ],
+  },
+  menus: {
+    type: [{
+      _id: { type: Schema.ObjectId, required: true },
+      name: { type: String, required: true },
+      items: [{
+        _id: { type: Schema.ObjectId, required: true },
+        parent: Schema.ObjectId,
+        order: { type: Number, required: true },
+        label: String,
+        type: { type: String, required: true },
+        guid: String,
+      }],
+    }],
+    default: [],
+  },
+  header: widgetAreaField,
+  top_content: widgetAreaField,
+  bottom_content: widgetAreaField,
+  left_sidebar: widgetAreaField,
+  right_sidebar: widgetAreaField,
+  footer: widgetAreaField,
+  disqus: Schema.Types.Mixed,
 });
 
 const userSchema = new Schema({
@@ -27,6 +68,16 @@ const unverifiedSchema = new Schema({
   email: { type: String, required: true },
   code: { type: String, required: true },
   expires: { type: Date, required: true },
+});
+
+const bruteForceSchema = new Schema({
+  "_id": String,
+  "data": {
+    "count": Number,
+    "lastRequest": Date,
+    "firstRequest": Date
+  },
+  "expires": Date
 });
 
 const tagSchema = new Schema({
@@ -50,6 +101,7 @@ module.exports = {
   siteSchema,
   userSchema,
   unverifiedSchema,
+  bruteForceSchema,
   tagSchema,
   postSchema,
 };

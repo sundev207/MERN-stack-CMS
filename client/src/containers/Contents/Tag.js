@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
+import { find } from 'lodash';
 import { CardHeader, IconButton, Menu, MenuItem } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
@@ -10,32 +10,26 @@ import { openSnackbar } from '../../actions/openSnackbar';
 import { slashDomain, hasBeenText } from '../../utils';
 import { onEditPost } from '../../utils/reactcms';
 
+import Head from '../Parts/Head';
 import NotFound from '../../components/NotFound';
 import Loading from '../../components/Loading';
 import Ancestors from '../../components/Lists/Ancestors';
 import Home from './Home';
 
-const styles = theme => ({});
-
 class Tag extends Component {
-  state = {
-    tag: null,
-    isNotFound: null,
-    anchorEl: null,
-  };
+  state = { isNotFound: null, anchorEl: null };
 
   componentDidMount() {
     this._isMounted = true;
-    const { type, match: { params }, info: { collectionPrefix } } = this.props;
+    const {
+      type,
+      match: { params },
+      info: { collectionPrefix }
+    } = this.props;
 
-    this.props.fetchPost( type, { ...params, collectionPrefix },
-      tag => {
-        if ( this._isMounted ) {
-          if (tag) this.setState({ tag });
-          else this.setState({ isNotFound: true });
-        }
-      }
-    );
+    this.props.fetchPost(type, { ...params, collectionPrefix }, nextTag => {
+      if (this._isMounted && !nextTag) this.setState({ isNotFound: true });
+    });
   }
 
   componentWillUnmount() {
@@ -44,35 +38,49 @@ class Tag extends Component {
 
   handleOpenMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
-  }
+  };
 
   handleCloseMenu = () => {
     this.setState({ anchorEl: null });
   };
 
   onDeleteClick = tag_id => {
-    const { type, history, info: { domain } } = this.props;
+    const {
+      type,
+      history,
+      info: { domain }
+    } = this.props;
 
-    this.props.deletePost( type, tag_id, data => {
-      history.push(`${slashDomain(domain)}/admin/${type === 'category' ? 'categorie' : type}s`);
-      this.props.openSnackbar( hasBeenText(type, data.name, 'deleted') );
+    this.props.deletePost(type, tag_id, data => {
+      history.push(
+        `${slashDomain(domain)}/admin/${
+          type === 'category' ? 'categorie' : type
+        }s`
+      );
+      this.props.openSnackbar(hasBeenText(type, data.name, 'deleted'));
     });
-  }
+  };
 
   render() {
-    const { tag, isNotFound } = this.state;
+    const { tag } = this.props;
+    const { isNotFound } = this.state;
 
     if (isNotFound) {
       return <NotFound />;
     } else if (!tag) {
       return <Loading />;
     } else {
-      const { type, history, info: { domain } } = this.props;
+      const {
+        type,
+        history,
+        info: { domain }
+      } = this.props;
       const { anchorEl } = this.state;
-      const taggedText = (type === 'tag') ? 'tagged' : 'categorized';
+      const taggedText = type === 'tag' ? 'tagged' : 'categorized';
 
       return (
         <div key={tag._id}>
+          <Head name={tag.name} description={tag.description} />
           <CardHeader
             action={
               <div>
@@ -89,8 +97,14 @@ class Tag extends Component {
                   open={Boolean(anchorEl)}
                   onClose={this.handleCloseMenu}
                 >
-                  <MenuItem onClick={() => onEditPost(type, tag._id, domain, history)}>Edit {type}</MenuItem>
-                  <MenuItem onClick={() => this.onDeleteClick(tag._id)}>Delete</MenuItem>
+                  <MenuItem
+                    onClick={() => onEditPost(type, tag._id, domain, history)}
+                  >
+                    Edit {type}
+                  </MenuItem>
+                  <MenuItem onClick={() => this.onDeleteClick(tag._id)}>
+                    Delete
+                  </MenuItem>
                 </Menu>
               </div>
             }
@@ -98,7 +112,12 @@ class Tag extends Component {
             subheader={
               <div>
                 <span>{tag.description}</span>
-                <Ancestors type={type} items={tag.ancestors} childName={tag.name} domain={domain} />
+                <Ancestors
+                  type={type}
+                  items={tag.ancestors}
+                  childName={tag.name}
+                  domain={domain}
+                />
               </div>
             }
           />
@@ -110,15 +129,38 @@ class Tag extends Component {
 }
 
 Tag.propTypes = {
-  classes: PropTypes.object.isRequired,
   type: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  info: PropTypes.object.isRequired,
+  tag: PropTypes.object,
+  fetchPost: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired
 };
 
-function mapStateToProps({ info }) {
-  return { info };
+function mapStateToProps({ info, categories, tags }, ownProps) {
+  const {
+    type,
+    match: { params }
+  } = ownProps;
+  let tag;
+
+  switch (type) {
+    case 'category':
+      tag = find(categories, o => o.slug === params.slug);
+      break;
+    case 'tag':
+      tag = find(tags, o => o.slug === params.slug);
+      break;
+    default:
+      break;
+  }
+
+  return { info, tag };
 }
 
-export default connect(mapStateToProps, { fetchPost, deletePost, openSnackbar })(
-  withStyles(styles)(Tag)
-);
+export default connect(
+  mapStateToProps,
+  { fetchPost, deletePost, openSnackbar }
+)(Tag);

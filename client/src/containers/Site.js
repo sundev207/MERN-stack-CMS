@@ -8,16 +8,11 @@ import { Snackbar } from '@material-ui/core';
 import { setCurrentUserByToken } from '../actions/signin';
 import { openSnackbar } from '../actions/openSnackbar';
 
-import Header from './Parts/Header';
-import Footer from './Parts/Footer';
-import Signin from './Contents/Signin';
-import FrontPage from './Contents/FrontPage';
-import Post from './Contents/Post';
-import Tag from './Contents/Tag';
-import Admin from './Admin';
-
-import NotFound from '../components/NotFound';
+import Head from './Parts/Head';
 import SnackbarContentWrapper from '../components/SnackbarContentWrapper';
+import Header from './Parts/Header';
+import Admin from './Admin';
+import Contents from './Contents';
 
 import { drawerStyle } from '../assets/jss/styles';
 
@@ -27,15 +22,15 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     zIndex: 1,
-    overflow: 'hidden',
+    overflow: 'visible',
     position: 'relative',
-    display: 'flex',
+    display: 'flex'
   },
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-  },
+    padding: theme.spacing.unit * 3
+  }
 });
 
 class Site extends Component {
@@ -60,44 +55,27 @@ class Site extends Component {
 
     return (
       <div className={classes.root}>
+        <Head />
         <Header drawerOpen={drawerOpen} onDrawerToggle={this.onDrawerToggle} />
-        <main className={classNames(classes.content, isAuthenticated && classes.contentLogged, drawerOpen && classes.appBarShift)}>
+        <main
+          className={classNames(
+            classes.content,
+            isAuthenticated && classes.contentLogged,
+            drawerOpen && classes.appBarShift
+          )}
+        >
           <div className={classes.toolbar} />
 
           <Switch>
-            <Route exact path={`${slashDomainParam}/signin`} component={Signin} />
-            <Route exact path={`${slashDomainParam}/`} component={FrontPage} />
             <Route path={`${slashDomainParam}/admin`} component={Admin} />
-
-            <Route exact path={`${slashDomainParam}/blog/:year/:month/:day/:slug`}
-              render={props => {
-                const { params: { year, month, day, slug } } = props.match;
-                return <Post type="post" key={`${year}-${month}-${day}-${slug}`} {...props} />;
-              }}
-            />
-            <Route exact path={`${slashDomainParam}/blog/:type/:slug`}
-              render={props => {
-                const { params: { type, slug } } = props.match;
-                return <Tag type={type} key={`${type}-${slug}`} {...props} />;
-              }}
-            />
-            <Route exact path={`${slashDomainParam}/:slug`}
-              render={props => {
-                const { params: { slug } } = props.match;
-                return <Post type="page" key={`page-${slug}`} {...props} />;
-              }}
-            />
-
-            <Route component={NotFound} />
+            <Route path={`${slashDomainParam}`} component={Contents} />
           </Switch>
-
-          <Footer />
         </main>
 
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'right',
+            horizontal: 'right'
           }}
           open={snackbar.open}
           onClose={() => this.props.openSnackbar(false)}
@@ -115,14 +93,24 @@ class Site extends Component {
 
 Site.propTypes = {
   classes: PropTypes.object.isRequired,
+  snackbar: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  domain: PropTypes.string.isRequired,
+  setCurrentUserByToken: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired
 };
 
-function mapStateToProps({ snackbar, auth: { isAuthenticated }, info: { domain } }) {
+function mapStateToProps({
+  snackbar,
+  auth: { isAuthenticated },
+  info: { domain }
+}) {
   return { snackbar, isAuthenticated, domain };
 }
 
 export default withRouter(
-  connect(mapStateToProps, { setCurrentUserByToken, openSnackbar })(
-    withStyles(styles)(Site)
-  )
+  connect(
+    mapStateToProps,
+    { setCurrentUserByToken, openSnackbar }
+  )(withStyles(styles)(Site))
 );

@@ -8,13 +8,13 @@ import {
 } from '@material-ui/core';
 import _ from 'lodash';
 import moment from 'moment';
-import { deletePost } from '../../actions/fetchPosts';
-import { openSnackbar } from '../../actions/openSnackbar';
-import { getPostStatusLabel, hasBeenText, getSorting, getFiltering } from '../../utils';
-import { isUserCapable, onEditPost, onViewPost } from '../../utils/reactcms';
+import { deletePost } from '../../../actions/fetchPosts';
+import { openSnackbar } from '../../../actions/openSnackbar';
+import { getPostStatusLabel, hasBeenText, getSorting, getFiltering } from '../../../utils';
+import { isUserCapable, onEditPost, onViewPost } from '../../../utils/reactcms';
 
-import EnhancedTableToolbar from '../../components/Tables/EnhancedTableToolbar';
-import EnhancedTableHead from '../../components/Tables/EnhancedTableHead';
+import PostsTableToolbar from './PostsTableToolbar';
+import PostsTableHead from '../../../components/Tables/PostsTableHead';
 
 const styles = theme => ({
   root: {
@@ -124,7 +124,7 @@ class PostsTable extends Component {
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar
+        <PostsTableToolbar
           numSelected={selected.length}
           type={type}
           title={title}
@@ -139,7 +139,7 @@ class PostsTable extends Component {
         />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
-            <EnhancedTableHead
+            <PostsTableHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -278,7 +278,7 @@ class PostsTable extends Component {
                         </TableCell>
                       }
                       {!isPost &&
-                        <TableCell numeric>{n.count}</TableCell>
+                        <TableCell align="right">{n.count}</TableCell>
                       }
                     </TableRow>
                   );
@@ -320,6 +320,12 @@ PostsTable.propTypes = {
   orderBy: PropTypes.string.isRequired,
   filterList: PropTypes.array,
   history: PropTypes.object.isRequired,
+
+  isPost: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
+  domain: PropTypes.string.isRequired,
+  deletePost: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired,
 };
 
 function mapStateToProps({ info: { domain }, auth: { user } }, { posts, type }) {

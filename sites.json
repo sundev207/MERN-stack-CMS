@@ -7,12 +7,13 @@
   "description": "A MERN-stack-CMS site.",
   "front_page": {
     "show_on_front": "posts",
-    "page_on_front": 0,
-    "page_for_posts": 0
+    "page_on_front": null,
+    "page_for_posts": null
   },
   "footer": [
     {
-      "type": "Markdown",
+      "_id": { "$oid": "5099803df3f4948bd2f98391" },
+      "type": "markdown",
       "body": {
         "variant": "caption",
         "align": "center",
@@ -21,7 +22,8 @@
       "order": 1
     },
     {
-      "type": "HTML",
+      "_id": { "$oid": "5099803df3f4948bd2f98392" },
+      "type": "html",
       "body": {
         "variant": "body1",
         "align": "center",
@@ -40,7 +42,8 @@
   "description": "Another MERN-stack-CMS site.",
   "footer": [
     {
-      "type": "Markdown",
+      "_id": { "$oid": "5099803df3f4948bd2f98396" },
+      "type": "markdown",
       "title": {
         "variant": "body2",
         "content": "Copyright"
@@ -53,7 +56,8 @@
       "order": 1
     },
     {
-      "type": "HTML",
+      "_id": { "$oid": "5099803df3f4948bd2f98397" },
+      "type": "html",
       "title": {
         "variant": "body2",
         "content": "Attribution"

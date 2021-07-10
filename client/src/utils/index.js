@@ -2,9 +2,13 @@ import React from 'react';
 import _ from 'lodash';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
-import { Typography,
-  FormControl, FormHelperText,
-  Input, InputLabel, InputAdornment
+import {
+  Typography,
+  FormControl,
+  FormHelperText,
+  Input,
+  InputLabel,
+  InputAdornment
 } from '@material-ui/core';
 import axios from 'axios';
 
@@ -12,10 +16,13 @@ export function createCleanHtml(dirtyMarkupSource, markdownFormatted) {
   const cleanHtml = DOMPurify.sanitize(
     markdownFormatted ? marked(dirtyMarkupSource) : dirtyMarkupSource
   );
-  return {__html: cleanHtml};
+  return { __html: cleanHtml };
 }
 
-function renderTypography({ type, order, title, body, ...custom }, markdownFormatted) {
+export function renderTypography(
+  { type, order, title, body, ...custom },
+  markdownFormatted
+) {
   const { ...titleCustom } = title;
   const titleContent = titleCustom.content;
   delete titleCustom.content;
@@ -28,32 +35,24 @@ function renderTypography({ type, order, title, body, ...custom }, markdownForma
 
   return (
     <Typography component="div" key={order} {...custom}>
-      {titleContent &&
-        <Typography dangerouslySetInnerHTML={createCleanHtml(titleContent)} {...titleCustom} />
-      }
-      {bodyContent &&
-        <Typography dangerouslySetInnerHTML={createCleanHtml(bodyContent, markdownFormatted)} {...bodyCustom} />
-      }
+      {titleContent && (
+        <Typography
+          dangerouslySetInnerHTML={createCleanHtml(titleContent)}
+          {...titleCustom}
+        />
+      )}
+      {bodyContent && (
+        <Typography
+          dangerouslySetInnerHTML={createCleanHtml(
+            bodyContent,
+            markdownFormatted
+          )}
+          {...bodyCustom}
+        />
+      )}
     </Typography>
   );
 }
-
-export const RenderWidgets = ({ contents }) => (
-  <div>
-    {_.map(_.orderBy(contents, 'order'),
-      widget => {
-        switch (widget.type) {
-          case 'Markdown':
-            return renderTypography(widget, true);
-          case 'HTML':
-            return renderTypography(widget);
-          default:
-            return;
-        }
-      }
-    )}
-  </div>
-);
 
 export function setAuthorizationToken(authToken) {
   if (authToken) {
@@ -63,30 +62,57 @@ export function setAuthorizationToken(authToken) {
   }
 }
 
-export function renderTextField(
-  { input, label, startAdornment, endAdornment, multiline, rows, type, autoComplete, meta: { touched, error, submitting }, ...custom }
-) {
-  const isError = (touched && error !== undefined);
+export function renderTextField({
+  input,
+  label,
+  startAdornment,
+  endAdornment,
+  multiline,
+  rows,
+  type,
+  autoComplete,
+  meta: { touched, error, submitting },
+  ...custom
+}) {
+  const isError = touched && error !== undefined;
 
   return (
-    <FormControl error={isError} aria-describedby={`${input.name}-text`} disabled={submitting} {...custom}>
+    <FormControl
+      error={isError}
+      aria-describedby={`${input.name}-text`}
+      disabled={submitting}
+      {...custom}
+    >
       <InputLabel htmlFor={input.name}>{label}</InputLabel>
-      <Input id={input.name} type={type} autoComplete={autoComplete} {...input}
-        startAdornment={startAdornment ?
-          <InputAdornment position="start">{startAdornment}</InputAdornment>
-        : null}
-        endAdornment={endAdornment ?
-          <InputAdornment position="end">{endAdornment}</InputAdornment>
-        : null}
-        multiline={multiline} rows={rows}
+      <Input
+        id={input.name}
+        type={type}
+        autoComplete={autoComplete}
+        {...input}
+        startAdornment={
+          startAdornment ? (
+            <InputAdornment position="start" style={{ whiteSpace: 'nowrap' }}>
+              {startAdornment}
+            </InputAdornment>
+          ) : null
+        }
+        endAdornment={
+          endAdornment ? (
+            <InputAdornment position="end">{endAdornment}</InputAdornment>
+          ) : null
+        }
+        multiline={multiline}
+        rows={rows}
       />
-      <FormHelperText id={`${input.name}-text`}>{touched ? error : ""}</FormHelperText>
+      <FormHelperText id={`${input.name}-text`}>
+        {touched ? error : ''}
+      </FormHelperText>
     </FormControl>
   );
-};
+}
 
 export function slashDomain(domain) {
-  return `${domain ? '/' : ''}${domain}`;
+  return domain !== undefined ? `${domain ? '/' : ''}${domain}` : '';
 }
 
 export function toSlug(text) {
@@ -99,16 +125,16 @@ export function toSlug(text) {
 export const POST_STATUSES = [
   {
     value: 'publish',
-    label: 'Published',
+    label: 'Published'
   },
   {
     value: 'draft',
-    label: 'Draft',
+    label: 'Draft'
   },
   {
     value: 'trash',
-    label: 'Bin',
-  },
+    label: 'Bin'
+  }
 ];
 
 export function getPostStatusLabel(val) {
@@ -122,7 +148,7 @@ export function idNameToValueLabel(idNames) {
   return _.map(idNames, o => {
     return {
       value: o._id,
-      label: o.name
+      label: o.name ? o.name : o.title
     };
   });
 }
@@ -164,9 +190,10 @@ export function getSorting(order, orderBy) {
 }
 
 export function getFiltering(post, type, filter) {
-  let group, isIncluded = filter ? false : true;
+  let group,
+    isIncluded = filter ? false : true;
 
-  if ( !isIncluded ) {
+  if (!isIncluded) {
     switch (type) {
       case 'post':
         group = post.categories;
@@ -176,11 +203,12 @@ export function getFiltering(post, type, filter) {
         group = post.ancestors;
         break;
 
-      default: break;
+      default:
+        break;
     }
 
     group.forEach(el => {
-      if ( el.slug === filter ) {
+      if (el.slug === filter) {
         isIncluded = true;
         return;
       }
@@ -188,4 +216,88 @@ export function getFiltering(post, type, filter) {
   }
 
   return isIncluded;
+}
+
+export function getPermalink(
+  domain,
+  type,
+  post,
+  relative = false,
+  removeSlug = false
+) {
+  const { location } = window;
+  let url = !relative ? `${location.protocol}//${location.host}` : '';
+  url += slashDomain(domain);
+
+  switch (type) {
+    case 'post':
+      const date = post.date ? new Date(post.date) : new Date();
+      const year = date.getUTCFullYear();
+      const month = date.getUTCMonth() + 1;
+      const day = date.getUTCDate();
+
+      url += `/blog/${year}/${month}/${day}/`;
+      break;
+
+    case 'page':
+      url += '/';
+      break;
+
+    default:
+      url += `/blog/${type}/`;
+      break;
+  }
+
+  return url + `${removeSlug || !post || !post.slug ? '' : post.slug}`;
+}
+
+// If targetsChildren is true, the hovering target is a menu item children
+export function isMenuParentDescendant(
+  itemId,
+  nextParent,
+  items,
+  targetsChildren = false
+) {
+  let parentItem;
+  let isParentDescendant = false;
+  let descendantsChecked = false;
+  do {
+    // eslint-disable-next-line no-loop-func
+    parentItem = items.find(el => el._id === nextParent);
+
+    if (parentItem !== undefined || targetsChildren) {
+      if (parentItem._id === itemId) {
+        isParentDescendant = true;
+        descendantsChecked = true;
+      }
+
+      if (parentItem.parent === null) descendantsChecked = true;
+      else nextParent = parentItem.parent;
+    } else {
+      descendantsChecked = true;
+    }
+  } while (!descendantsChecked);
+
+  return isParentDescendant;
+}
+
+export function trimContent(str, maxLength) {
+  let trimmedString = str
+    .replace(/(\r\n|\n|\r)/gm, ' ')
+    .replace(/ +(?= )/g, '')
+    .trim();
+
+  if (trimmedString.length > maxLength) {
+    trimmedString = trimmedString.substr(0, maxLength);
+    trimmedString = trimmedString.substr(
+      0,
+      Math.min(trimmedString.length, trimmedString.lastIndexOf(' '))
+    );
+  }
+
+  return trimmedString;
+}
+
+export function trimDescription(str) {
+  return trimContent(str, 300);
 }

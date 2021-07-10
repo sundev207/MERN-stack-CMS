@@ -15,6 +15,7 @@ import { setCurrentUserByToken } from '../../../actions/signin';
 
 import DrawerList from './DrawerList';
 import SiteList from './SiteList';
+import Search from './Search';
 
 import { drawerStyle } from '../../../assets/jss/styles';
 
@@ -94,6 +95,7 @@ class Header extends React.Component {
       <div>
         <AppBar
           className={classNames(classes.appBar, drawerOpen && classes.appBarShift)}
+          id="header"
         >
           <Toolbar>
             {isAuthenticated && (
@@ -106,11 +108,14 @@ class Header extends React.Component {
                 <MenuIcon />
               </IconButton>
             )}
-            <Typography variant="title" color="inherit" noWrap className={classes.flex}
+            <Typography variant="h6" color="inherit" noWrap className={classes.flex}
               component={Link} to={`/${domain}`}
             >
               {site.title}
             </Typography>
+
+            <Search />
+
             {isAuthenticated ? (
               <div>
                 <IconButton
@@ -172,6 +177,10 @@ Header.propTypes = {
   theme: PropTypes.object.isRequired,
   drawerOpen: PropTypes.bool,
   onDrawerToggle: PropTypes.func.isRequired,
+  info: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  site: PropTypes.object.isRequired,
+  setCurrentUserByToken: PropTypes.func.isRequired,
 };
 
 function mapStateToProps({ info, sites, auth }) {

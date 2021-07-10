@@ -75,6 +75,7 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     height: 70,
+    display: 'contents',
   },
   chip: {
     margin: theme.spacing.unit / 4,
@@ -231,10 +232,12 @@ class Autocomplete extends Component {
 }
 
 Autocomplete.propTypes = {
+  classes: PropTypes.object.isRequired,
+  input: PropTypes.object.isRequired,
+  meta: PropTypes.object.isRequired,
   placeholder: PropTypes.string,
   label: PropTypes.string,
   options: PropTypes.array.isRequired, // [{ value, label }]
-  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Autocomplete);
